@@ -44,7 +44,7 @@ public class TarefasController : Controller
 
             if (infoProjeto.usuarioId != usuarioId)
             {
-                if (!usuario.IsGerente)
+                if (usuario.funcao != Usuario.FUNCAO_GERENTE)
                 {
                     throw new Exception("Você não tem permissão para acessar as tarefas do projeto");
                 }
@@ -115,7 +115,7 @@ public class TarefasController : Controller
             .Where(x => x.id == usuarioId)
             .FirstOrDefault();
 
-        if (usuarioId != projeto.usuarioId && !usuario.IsGerente)
+        if (usuarioId != projeto.usuarioId && usuario.funcao != Usuario.FUNCAO_GERENTE)
         {
             throw new Exception(
                 $"Você não tem permissão para {(criando ? "criar" : "alterar")} tarefas neste projeto");
@@ -281,7 +281,7 @@ public class TarefasController : Controller
                 .Where(x => x.id == usuarioId)
                 .FirstOrDefault();
 
-            if (usuarioId != projeto.usuarioId && !usuario.IsGerente)
+            if (usuarioId != projeto.usuarioId && usuario.funcao != Usuario.FUNCAO_GERENTE)
             {
                 throw new Exception($"Você não tem permissão para excluir tarefas neste projeto");
             }
@@ -385,7 +385,7 @@ public class TarefasController : Controller
                     .Where(x => x.id == usuarioId)
                     .FirstOrDefault();
 
-                if (!usuario.IsGerente)
+                if (usuario.funcao != Usuario.FUNCAO_GERENTE)
                 {
                     throw new Exception("Apenas gerentes possuem acesso a tarefas de outros usuários");
                 }

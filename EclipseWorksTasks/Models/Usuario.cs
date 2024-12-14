@@ -7,14 +7,14 @@ namespace EclipseWorksTasks.Models
 {
     public class Usuario
     {
+        public const string FUNCAO_COLABORADOR = "colaborador";
+        public const string FUNCAO_GERENTE = "gerente";
+        
         public int id { get; set; }
 
         public string nome { get; set; }
         
         public string funcao { get; set; }
-
-        [NotMapped]
-        public bool IsGerente => funcao == "gerente";
 
         public void Validar()
         {
@@ -23,7 +23,7 @@ namespace EclipseWorksTasks.Models
                 throw new Exception(Constantes.Erro_NomeInvalido);
             }
 
-            if (!(funcao is "colaborador" or "gerente"))
+            if (!(funcao is FUNCAO_COLABORADOR or FUNCAO_GERENTE))
             {
                 throw new Exception("Função inválida. Funções válidas: 'colaborador' ou 'gerente'");
             }

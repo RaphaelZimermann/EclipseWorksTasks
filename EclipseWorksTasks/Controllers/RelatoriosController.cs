@@ -45,7 +45,7 @@ namespace EclipseWorksTasks.Controllers
                     .Where(x => x.id == usuarioId)
                     .FirstOrDefault();
 
-                if (!usuario.IsGerente)
+                if (usuario.funcao != Usuario.FUNCAO_GERENTE)
                 {
                     throw new Exception("Apenas gerentes possuem acesso ao relatório");
                 }
@@ -98,7 +98,7 @@ namespace EclipseWorksTasks.Controllers
                     .Where(x => x.id == usuarioId)
                     .FirstOrDefault();
 
-                if (!usuario.IsGerente)
+                if (usuario.funcao != Usuario.FUNCAO_GERENTE)
                 {
                     throw new Exception("Apenas gerentes possuem acesso ao relatório");
                 }
