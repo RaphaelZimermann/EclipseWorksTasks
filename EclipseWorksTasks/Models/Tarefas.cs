@@ -61,7 +61,7 @@ namespace EclipseWorksTasks.Models
                 throw new Exception("Descrição inválida");
             }
             
-            if (vencimento < DateOnly.FromDateTime(DateTime.Now))
+            if (vencimento < Utilidades.Hoje)
             {
                 throw new Exception("Vencimento precisa ser a frente");
             }

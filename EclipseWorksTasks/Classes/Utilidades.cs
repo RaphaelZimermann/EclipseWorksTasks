@@ -4,7 +4,8 @@ namespace EclipseWorksTasks.Classes
     {
         // Se for necessário fazer tratamentos da origem da data,
         // pode ser alterado aqui
-        public static DateOnly Hoje => DateOnly.FromDateTime(DateTime.Now);
+        public static DateTime Agora => DateTime.Now;
+        public static DateOnly Hoje => DateOnly.FromDateTime(Agora);
 
         public static bool ValidarTexto(string name)
         {

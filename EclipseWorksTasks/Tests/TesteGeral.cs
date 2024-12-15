@@ -13,7 +13,7 @@ namespace EclipseWorksTasks.Tests
     {
         protected async Task<T> Comunicar<T>(string url, string evento, object dado = null)
         {
-            var baseUrl = "https://localhost:7077";
+            var baseUrl = "http://localhost:8080"; 
             
             try
             {
@@ -55,7 +55,6 @@ namespace EclipseWorksTasks.Tests
             
             try
             {
-                var baseUrl = "https://localhost:7077";
                 int maximoTarefas = 20;
                 var usuarioId = 1;
 
@@ -67,7 +66,7 @@ namespace EclipseWorksTasks.Tests
                     
                     var ret = await Comunicar<ResultadoUnico<Projeto>>($"{usuarioId}/projetos/criar", "post", new Projeto()
                     {
-                        nome = $"Projeto teste {DateTime.Now:dd/MM/yyyy HH:mm:ss}",
+                        nome = $"Projeto teste {Utilidades.Agora:dd/MM/yyyy HH:mm:ss}",
                         usuarioId = usuarioId
                     });
 
@@ -138,7 +137,7 @@ namespace EclipseWorksTasks.Tests
                             descricao = $"Descrição tarefa #{i}",
                             prioridade = Tarefa.PRIORIDADE_MEDIA,
                             status = Tarefa.STATUS_PENDENTE,
-                            vencimento = DateOnly.FromDateTime(DateTime.Now.AddDays(i)),
+                            vencimento = Utilidades.Hoje.AddDays(i),
                             usuarioCriouId = usuarioId
                         });
 

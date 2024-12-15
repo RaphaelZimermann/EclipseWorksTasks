@@ -82,7 +82,7 @@ public class TarefasController : Controller
         {
             if (!tarefa.dataConclusao.HasValue)
             {
-                tarefa.dataConclusao = DateOnly.FromDateTime(DateTime.Now);
+                tarefa.dataConclusao = Utilidades.Hoje;
             }
         }
         else
@@ -166,7 +166,7 @@ public class TarefasController : Controller
                     await context.CriarHistoricoTarefa(new HistoricoTarefa()
                     {
                         tipo = HistoricoTarefa.TIPO_ALTERACAO,
-                        dataHora = DateTime.Now,
+                        dataHora = Utilidades.Agora,
                         tarefaId = tarefa.id,
                         usuarioId = usuarioId,
                         conteudo = $"'{legenda}' alterado de '{vlA}' para '{vlB}'"
@@ -332,7 +332,7 @@ public class TarefasController : Controller
             await context.CriarHistoricoTarefa(new HistoricoTarefa()
             {
                 tipo = HistoricoTarefa.TIPO_COMENTARIO,
-                dataHora = DateTime.Now,
+                dataHora = Utilidades.Agora,
                 usuarioId = usuarioId,
                 tarefaId = tarefaId,
                 conteudo = com

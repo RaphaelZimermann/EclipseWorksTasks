@@ -7,6 +7,8 @@ namespace EclipseWorksTasks.Models
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
+            // Existem diversas formas de preparar a base. Preferi optar aqui 
+            // pela simplicidade, focando na API em si.
             this.Database.ExecuteSqlRaw(File.ReadAllText("init-db.sql"));
         }
         
