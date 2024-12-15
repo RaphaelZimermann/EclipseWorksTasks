@@ -21,9 +21,8 @@ using EclipseWorksTasks.Models;
             new MySqlServerVersion(new Version(8, 0, 33)) // Substitua pela versão do seu MySQL
         ));
 
-    var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+    var app = builder.Build();
 
     app.UseSwagger();
     app.UseSwaggerUI();

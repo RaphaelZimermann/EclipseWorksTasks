@@ -1,23 +1,28 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
-
+﻿# Etapa 1: Compilação
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["EclipseWorksTasks/EclipseWorksTasks.csproj", "EclipseWorksTasks/"]
-RUN dotnet restore "EclipseWorksTasks/EclipseWorksTasks.csproj"
-COPY . .
-WORKDIR "/src/EclipseWorksTasks"
-RUN dotnet build "EclipseWorksTasks.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "EclipseWorksTasks.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+EXPOSE 8080
 
-FROM base AS final
+# Copiar o arquivo de projeto e o restante do código-fonte
+COPY EclipseWorksTasks.csproj ./
+COPY . ./
+
+# Restaurar as dependências do projeto
+RUN dotnet restore
+
+# Defina a variável de ambiente ASPNETCORE_URLS
+ENV ASPNETCORE_URLS=http://0.0.0.0:8080
+
+# Publicar a aplicação no modo Release
+RUN dotnet publish -c Release -o /app/published
+
+# Etapa 2: Execução
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+# Copiar os binários compilados da etapa de build para a imagem final
+COPY --from=build /app/published .
+
+# Comando de entrada para iniciar a aplicação
 ENTRYPOINT ["dotnet", "EclipseWorksTasks.dll"]
